@@ -29,8 +29,7 @@ app.post('/api/register', function (req, res) {
     const { email, password } = req.body;
 
     if(email === undefined || password === undefined) {
-        res.status(401).send();
-        return;
+        return res.status(401).send();
     }
 
     pool.query(
@@ -54,6 +53,34 @@ app.post('/api/register', function (req, res) {
                 res.status(500).send(error);
             })
         })
+})
+
+app.post('/api/login', function (req, res) {
+    const { email, password } = req.body;
+
+    pool.query(
+        'SELECT password FROM users WHERE email = $1',
+        [email]
+    ).then(function (response) {
+        if (response.rows.length === 0) {
+            return res.status(401).send();
+        }
+
+        let hashedPassword = response.rows[0].password;
+        bcrypt
+            .compare(password, hashedPassword)
+            .then(function (isSame) {
+                if(isSame) {
+                    return res.status(200).send();
+                } else {
+                    return res.status(401).send();
+                }
+            }).catch(function (error) {
+                return res.status(500).send(error);
+        })
+    }).catch(function (error) {
+        return res.status(500).send(error);
+    })
 })
 
 // The "catchall" handler: for any request that doesn't
