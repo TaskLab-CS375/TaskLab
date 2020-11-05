@@ -4,7 +4,8 @@
   "description": "",
   "main": "app/server.js",
   "scripts": {
-    "start": "node app/server.js"
+    "build": "npm run build --prefix tasklab",
+    "start": "npm run build && node app/server.js"
   },
   "keywords": [],
   "author": "",

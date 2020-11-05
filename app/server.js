@@ -22,7 +22,7 @@ const env = require("../env.json");
 const Pool = pg.Pool;
 const pool = new Pool(env["database"]);
 pool.connect().then(function () {
-    console.log(`Connected to database ${env.database}`);
+    console.log(`Connected to database ${env.database.database}`);
 });
 
 const bcrypt = require("bcrypt");
