@@ -24,7 +24,8 @@ management system in order to track project progress and manage team members.
 ## <div id="sources"> Sources </div>
 
   * https://daveceddia.com/deploy-react-express-app-heroku/
-
+  * https://medium.com/@faizanv/authentication-for-your-react-and-express-application-w-json-web-tokens-923515826e0
+  
 ## <div id="license"> License </div>
 
   

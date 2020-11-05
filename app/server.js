@@ -1,6 +1,9 @@
 const pg = require("pg");
 const path = require('path');
 const express = require("express");
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const withAuth = require('./middleware');
 
 const app = express();
 
@@ -10,13 +13,14 @@ const reactPath = '/../tasklab/build'
 app.use(express.static(path.join(__dirname, reactPath)));
 app.use(express.static("public_html"));
 app.use(express.json());
+app.use(cookieParser());
 
 const port = 3000;
 const hostname = "localhost";
 
 const env = require("../env.json");
 const Pool = pg.Pool;
-const pool = new Pool(env);
+const pool = new Pool(env["database"]);
 pool.connect().then(function () {
     console.log(`Connected to database ${env.database}`);
 });
@@ -24,6 +28,8 @@ pool.connect().then(function () {
 const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
+
+const secret = env["secret"];
 
 app.post('/api/register', function (req, res) {
     const { email, password } = req.body;
@@ -71,7 +77,11 @@ app.post('/api/login', function (req, res) {
             .compare(password, hashedPassword)
             .then(function (isSame) {
                 if(isSame) {
-                    return res.status(200).send();
+                    const payload = { email };
+                    const token = jwt.sign(payload, secret, {
+                        expiresIn: '1h'
+                    });
+                    res.cookie('token', token, { httpOnly: true }).sendStatus(200);
                 } else {
                     return res.status(401).send();
                 }
@@ -81,7 +91,7 @@ app.post('/api/login', function (req, res) {
     }).catch(function (error) {
         return res.status(500).send(error);
     })
-})
+});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
