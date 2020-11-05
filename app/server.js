@@ -93,6 +93,10 @@ app.post('/api/login', function (req, res) {
     })
 });
 
+app.get('/checkToken', withAuth, function (req, res) {
+    res.sendStatus(200);
+});
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
