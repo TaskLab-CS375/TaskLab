@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
+import {Redirect} from "react-router-dom";
 
 export default class Login extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export default class Login extends Component {
             }
         }).then(res => {
             if (res.status === 200) {
-                console.log('Logged in');
+                this.props.history.push('/');
             } else {
                 throw new Error(res.error);
             }
