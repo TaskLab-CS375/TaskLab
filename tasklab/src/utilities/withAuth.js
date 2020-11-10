@@ -19,7 +19,7 @@ export default function withAuth(ComponentToProtect) {
                     throw new Error(res.error);
                 }
             }).catch(err => {
-                console.error(err);
+                console.log(err);
                 this.setState({ loading:false, redirect: true });
             });
         }
