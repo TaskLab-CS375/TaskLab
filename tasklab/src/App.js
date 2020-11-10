@@ -13,18 +13,7 @@ function App() {
         <Router>
             <div className="App">
                 <div className="container d-flex align-items-center flex-column">
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to="/login">Login</Link>
-                            </li>
-                        </ul>
-                    </nav>
-                    <Switch>
-                        <Route path="/login">
-                            <Login />
-                        </Route>
-                    </Switch>
+                    <Login />
                 </div>
             </div>
         </Router>

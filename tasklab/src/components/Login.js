@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import './Login.css';
 
 export default class Login extends Component {
     constructor(props) {
@@ -39,26 +40,31 @@ export default class Login extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onSubmit}>
-                <h1>Login Below!</h1>
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter email"
-                    value={this.state.email}
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter password"
-                    value={this.state.password}
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <input type="submit" value="Submit"/>
-            </form>
+            <div className="text-center">
+                <form className="form-signin" onSubmit={this.onSubmit}>
+                    <h1 className="h3 mb-3">Login Below!</h1>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        value={this.state.email}
+                        onChange={this.handleInputChange}
+                        className="form-control"
+                        required
+                        autoFocus
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        value={this.state.password}
+                        onChange={this.handleInputChange}
+                        className="form-control"
+                        required
+                    />
+                    <button className="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+                </form>
+            </div>
         );
     }
 }
