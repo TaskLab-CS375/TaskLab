@@ -33,11 +33,15 @@ export default class Register extends Component {
             if (res.status === 200) {
                 this.props.history.push('/');
             } else {
-                throw new Error(res.error);
+                res.text().then(message => {
+                    alert(message);
+                });
             }
         }).catch(err => {
-            console.log(err);
-            alert('Error registering. Please try again.')
+            err.text().then(errorMessage => {
+                console.log(errorMessage);
+                alert(errorMessage);
+            });
         })
     }
 
