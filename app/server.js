@@ -45,25 +45,25 @@ app.post('/api/register', function (req, res) {
         if (response.rows.length !== 0) {
             return res.status(401).send('Email already exist!');
         }
-    });
 
-    bcrypt
-        .hash(password, saltRounds)
-        .then(function (hashedPassword) {
-            pool.query(
-                'INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4)',
-                [firstName, lastName, email, hashedPassword]
-            ).then(function (response) {
-                const payload = { email };
-                const token = jwt.sign(payload, secret, {
-                    expiresIn: '1h'
-                });
-                res.cookie('token', token, { httpOnly: true }).sendStatus(200);
-            }).catch(function (error) {
-                console.log(error);
-                res.status(500).send(error);
+        bcrypt
+            .hash(password, saltRounds)
+            .then(function (hashedPassword) {
+                pool.query(
+                    'INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4)',
+                    [firstName, lastName, email, hashedPassword]
+                ).then(function (response) {
+                    const payload = { email };
+                    const token = jwt.sign(payload, secret, {
+                        expiresIn: '1h'
+                    });
+                    res.cookie('token', token, { httpOnly: true }).sendStatus(200);
+                }).catch(function (error) {
+                    console.log(error);
+                    res.status(500).send(error);
+                })
             })
-        })
+    });
 })
 
 app.post('/api/login', function (req, res) {
