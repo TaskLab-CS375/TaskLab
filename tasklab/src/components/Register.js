@@ -31,13 +31,13 @@ export default class Register extends Component {
             }
         }).then(res => {
             if (res.status === 200) {
-                console.log('Logged in');
+                this.props.history.push('/');
             } else {
                 throw new Error(res.error);
             }
         }).catch(err => {
             console.log(err);
-            alert('Error logging in. Please try again.')
+            alert('Error registering. Please try again.')
         })
     }
 
