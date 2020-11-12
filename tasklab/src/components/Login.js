@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import './Login.css';
-import {Redirect} from "react-router-dom";
+import './Form.css';
+import {Link} from "react-router-dom";
 
 export default class Login extends Component {
     constructor(props) {
@@ -41,9 +41,9 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div className="text-center">
+            <div id="form-root">
                 <form className="form-signin" onSubmit={this.onSubmit}>
-                    <h1 className="h3 mb-3">Login Below!</h1>
+                    <h1 className="h3 mb-3 text-center">Login Below!</h1>
                     <input
                         type="email"
                         name="email"
@@ -64,6 +64,7 @@ export default class Login extends Component {
                         required
                     />
                     <button className="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+                    <Link className="text-center" to="/register">Create your account here!</Link>
                 </form>
             </div>
         );

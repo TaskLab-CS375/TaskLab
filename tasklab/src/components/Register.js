@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
+import './Form.css'
 
 export default class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            firstName: "",
+            lastName: "",
             email: "",
             password: ""
         }
@@ -40,26 +43,48 @@ export default class Register extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onSubmit}>
-                <h1>Register!</h1>
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter email"
-                    value={this.state.email}
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter password"
-                    value={this.state.password}
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <input type="submit" value="Submit"/>
-            </form>
+            <div id="form-root">
+                <form className="form-signin" onSubmit={this.onSubmit}>
+                    <h1 className="h3 mb-3">Register!</h1>
+                    <input
+                        type="text"
+                        name="firstName"
+                        placeholder="Enter first name"
+                        value={this.state.firstName}
+                        onChange={this.handleInputChange}
+                        className="form-control"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="lastName"
+                        placeholder="Enter last name"
+                        value={this.state.lastName}
+                        onChange={this.handleInputChange}
+                        className="form-control"
+                        required
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        value={this.state.email}
+                        onChange={this.handleInputChange}
+                        className="form-control"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        value={this.state.password}
+                        onChange={this.handleInputChange}
+                        className="form-control"
+                        required
+                    />
+                    <button className="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                </form>
+            </div>
         );
     }
 }
