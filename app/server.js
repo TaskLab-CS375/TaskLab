@@ -54,7 +54,11 @@ app.post('/api/register', function (req, res) {
                 'INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4)',
                 [firstName, lastName, email, hashedPassword]
             ).then(function (response) {
-                res.status(200).send(response);
+                const payload = { email };
+                const token = jwt.sign(payload, secret, {
+                    expiresIn: '1h'
+                });
+                res.cookie('token', token, { httpOnly: true }).sendStatus(200);
             }).catch(function (error) {
                 console.log(error);
                 res.status(500).send(error);
