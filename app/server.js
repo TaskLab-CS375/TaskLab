@@ -32,7 +32,7 @@ const saltRounds = 10;
 const secret = env["secret"];
 
 app.post('/api/register', function (req, res) {
-    const { email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     if(email === undefined || password === undefined) {
         return res.status(401).send();
@@ -51,11 +51,12 @@ app.post('/api/register', function (req, res) {
         .hash(password, saltRounds)
         .then(function (hashedPassword) {
             pool.query(
-                'INSERT INTO users (email, password) VALUES ($1, $2)',
-                [email, hashedPassword]
+                'INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4)',
+                [firstName, lastName, email, hashedPassword]
             ).then(function (response) {
                 res.status(200).send(response);
             }).catch(function (error) {
+                console.log(error);
                 res.status(500).send(error);
             })
         })
