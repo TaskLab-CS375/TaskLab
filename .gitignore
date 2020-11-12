@@ -2,3 +2,4 @@ env.json
 tasklab\node_modules
 node_modules
 .idea
+tasklab\build
