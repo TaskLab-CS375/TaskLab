@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Form.css';
 import {Link} from "react-router-dom";
+import { useHistory } from 'react-router'
 
 export default class Login extends Component {
     constructor(props) {
@@ -29,7 +30,8 @@ export default class Login extends Component {
             }
         }).then(res => {
             if (res.status === 200) {
-                this.props.history.push('/');
+                this.props.history.push('/dashboard');
+                window.location.reload();
             } else {
                 res.text().then(message => {
                     alert(message);

@@ -102,6 +102,13 @@ app.get('/checkToken', withAuth, function (req, res) {
     res.sendStatus(200);
 });
 
+app.get('/logout', function (req, res) {
+    res.clearCookie('token', {
+        httpOnly: true
+    });
+    res.redirect('/');
+})
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {

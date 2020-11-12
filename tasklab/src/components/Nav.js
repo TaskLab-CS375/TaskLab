@@ -4,33 +4,67 @@ import withAuth from "../utilities/withAuth";
 import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
+import { checkLogin } from "../utilities/auth";
+import Dashboard from "./Dashboard";
 
 export default class Nav extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+        checkLogin().then(result => this.setState({ data: result }));
+    }
+
+    async logout(e) {
+        e.preventDefault();
+        await fetch('/logout');
+        this.setState({ data: false });
+    }
+
     render() {
+        const { data } = this.state;
+
         return (
             <div>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <a className="navbar-brand" href="#">
-                        <img src="logo.png" alt="" />
-                    </a>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"/>
-                    </button>
+                <nav className="navbar navbar-expand-md navbar-light bg-light">
+                    <div className="mx-auto order-0">
+                        <a className="navbar-brand mx-auto" href="#">
+                            <img width="75%" height="75%" src="/logo.png" alt="" />
+                        </a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target=".dual-collapse2">
+                            <span className="navbar-toggler-icon"/>
+                        </button>
+                    </div>
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <ul className="navbar-nav">
+                        <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                                <Link className="nav-link" to="/">Home</Link>
                             </li>
+                            {
+                                data &&
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/login">Login</Link>
+                                { data
+                                    ? <p onClick={this.logout.bind(this)}>Logout</p>
+                                    : <Link className="nav-link" to="/login">Login</Link>
+                                }
                             </li>
                         </ul>
                     </div>
                 </nav>
                 <Switch>
-                    <Route path="/" exact component={withAuth(Home)} />
+                    <Route path="/" exact component={Home} />
+                    <Route path="/dashboard" component={withAuth(Dashboard)} />
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register} />
                 </Switch>
