@@ -43,7 +43,7 @@ export default class Register extends Component {
 
     render() {
         return (
-            <div id="form-root">
+            <div id="form-root" className="text-center">
                 <form className="form-signin" onSubmit={this.onSubmit}>
                     <h1 className="h3 mb-3">Register!</h1>
                     <input
