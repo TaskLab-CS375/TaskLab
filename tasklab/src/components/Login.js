@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './Form.css';
 import {Link} from "react-router-dom";
-import { useHistory } from 'react-router'
+import { withCookies, Cookies } from 'react-cookie';
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,6 +30,9 @@ export default class Login extends Component {
             }
         }).then(res => {
             if (res.status === 200) {
+                const { cookies } = this.props;
+                cookies.set('userID', this.state.email, { path: '/' });
+
                 this.props.history.push('/dashboard');
                 window.location.reload();
             } else {
@@ -76,3 +79,5 @@ export default class Login extends Component {
         );
     }
 }
+
+export default withCookies(Login);

@@ -14,17 +14,17 @@ export default class Nav extends Component {
     }
 
     componentDidMount() {
-        checkLogin().then(result => this.setState({ data: result }));
+        checkLogin().then(result => this.setState({ isAuthenticated: result }));
     }
 
     async logout(e) {
         e.preventDefault();
         await fetch('/logout');
-        this.setState({ data: false });
+        this.setState({ isAuthenticated: false });
     }
 
     render() {
-        const { data } = this.state;
+        const { isAuthenticated } = this.state;
 
         return (
             <div>
@@ -44,7 +44,7 @@ export default class Nav extends Component {
                                 <Link className="nav-link" to="/">Home</Link>
                             </li>
                             {
-                                data &&
+                                isAuthenticated &&
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/dashboard">Dashboard</Link>
                                 </li>
@@ -54,7 +54,7 @@ export default class Nav extends Component {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                { data
+                                { isAuthenticated
                                     ? <p onClick={this.logout.bind(this)}>Logout</p>
                                     : <Link className="nav-link" to="/login">Login</Link>
                                 }
@@ -64,8 +64,17 @@ export default class Nav extends Component {
                 </nav>
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <Route path="/dashboard" component={withAuth(Dashboard)} />
-                    <Route path="/login" component={Login}/>
+                    <Route
+                        path="/dashboard"
+                        component={withAuth(Dashboard)}
+                        render={(props) => (
+                            withAuth(<Dashboard {...props} />)
+                        )}/>
+                    <Route
+                        path="/login"
+                        render={(props) => (
+                            <Login {...props} />
+                        )} />
                     <Route path="/register" component={Register} />
                 </Switch>
             </div>
