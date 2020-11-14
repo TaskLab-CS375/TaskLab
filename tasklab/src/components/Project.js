@@ -3,6 +3,7 @@ import {withCookies} from "react-cookie";
 import Projectitem from './Projectitem';
 import AddProject from './AddProject';
 
+
 class Project extends Component  {
     constructor(props) {
         super(props);
@@ -42,25 +43,31 @@ class Project extends Component  {
     //     })
     // }
 
+    renderTableData() {
+        let rows = [];
+        this.state['projects'].map( (project) => {
+            let eachProject = {};
+            eachProject['name'] = project.projectname;
+            eachProject['group'] = project.groupname;
+            eachProject['start'] = project.starttime;
+            eachProject['end'] = project.endTime;
+            eachProject['status'] = project.projectstatus;
+            rows.push(eachProject);
+        });
+        return rows;
+    }
+    
+
     render() {
         const userID = this.state.userID;
+        this.renderTableData();
         console.log(this.state);
         console.log(Array.isArray(this.state['projects']));
-        console.log('Hi');
         return (
             <div>
                 Welcome { userID }!
                 <AddProject />
-                < table className="projectTable">
-                    <thead>
-                    <tr><th>Project Name</th><th>Group Name</th><th>Start Time</th><th>End Time</th><th>Status</th></tr>
-                    </thead>
-                    <tbody>
-                        { this.state['projects'].map( (project) => (
-                        <Projectitem key={project.projectID} project={project} />
-                        )) }
-                    </tbody>
-                </table>
+                <Projectitem rows={this.renderTableData()} />
             </div>
         );
     }

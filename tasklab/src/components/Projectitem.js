@@ -1,50 +1,31 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import DataGrid from 'react-data-grid';
+import 'react-data-grid/dist/react-data-grid.css';
 
 
+const columns = [
+    { key: 'name', name: 'Project Name', sortable: true, filterable: true},
+    { key: 'group', name: 'Group Name', sortable: true, filterable: true},
+    { key: 'start', name: 'Start', sortable: true, filterable: true},
+    { key: 'end', name: 'End', sortable: true, filterable: true},
+    { key: 'status', name: 'Status', sortable: true, filterable: true}
+];
 
-export class Projectitem extends Component {
-    getRowStyle = () => {
-        return {
-            background: 'lightgrey',
-            padding: '10px',
-            border: '1px solid black',
-            borderCollapse: 'collapse',
-            width: '100%'
-            // color: this.props.task.percentCompleted === 0 ? 'red' : 'black'
-        }
-    }
-    
+export class Projectitem extends Component {    
     render() {
-        const project = this.props.project;
-        console.log(project.projectname);
+        const rows = this.props.rows
+        console.log(rows);
         return (
             <React.Fragment>
-                <tr style={this.getRowStyle()}><td>{project.projectname}</td><td>{project.groupname}</td><td>{project.starttime}</td><td>{project.endTime}</td><td>{project.projectstatus}</td></tr>
+                {console.log(rows)}
+                <DataGrid
+                    columns={columns}
+                    rows={rows}
+                />
             </React.Fragment>
-
-            // <div style={this.getStyle()}>
-            //     <p>
-            //         {project.starttime} - {project.endTime}: {project.projectname}
-
-            //         {/* <button onClick={this.props.delTask.bind(this, id)} style={btnStyle}>Delete</button> */}
-            //     </p>
-                
-            // </div>
         )
     }
 }
 
-const btnStyle = {
-    background: 'red',
-    color: 'white',
-    padding: '5px 5px',
-    float: 'right'
-}
-
-// PropTypes
-Projectitem.propTypes = {
-    project: PropTypes.object.isRequired
-}
 
 export default Projectitem
