@@ -98,6 +98,35 @@ app.post('/api/login', function (req, res) {
     })
 });
 
+app.post("/addProject", function (req, res) {
+    let body = req.body;
+    pool.query(
+        "INSERT INTO Projects (projectName, groupID, projectStatus, startTime, endTime) VALUES($1, $2, $3, $4, $5) RETURNING *; INSERT INTO UserProjects (projectID, userID) VALUES($6,$7)",
+        [body.projectName, body.groupID, body.projectStatus, body.startTime, body.endTime, body.projectID, body.userID]
+    )
+        .then(function (response) {
+            console.log(response.rows);
+            res.status(200).send(response.rows);
+        })
+        .catch(function (error) {
+            return res.sendStatus(500);
+        });
+});
+
+app.get("/getProject", function (req, res) {
+    let userEmail = req.query.userID;
+    console.log(userEmail);
+    pool.query("SELECT P.projectID, P.projectName, G.groupName, P.projectStatus, P.startTime, P.endTime FROM userGroups UG, users U, projects P, groups G WHERE U.email=$1 and U.userID = UG.userID and P.groupID=UG.groupID and G.groupID=UG.groupID;", [userEmail])
+        .then(function (response) {
+            console.log(response.rows);
+            return res.status(200).json({rows: response.rows});
+        })
+        .catch(function (error) {
+            console.log(error);
+            return res.sendStatus(500);
+        });
+});
+
 app.get('/checkToken', withAuth, function (req, res) {
     res.sendStatus(200);
 });

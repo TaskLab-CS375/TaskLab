@@ -6,6 +6,7 @@ import Login from "./Login";
 import Register from "./Register";
 import { checkLogin } from "../utilities/auth";
 import Dashboard from "./Dashboard";
+import Project from "./Project";
 
 export default class Nav extends Component {
     constructor(props) {
@@ -47,6 +48,9 @@ export default class Nav extends Component {
                                 isAuthenticated &&
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                                </li> &&
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/project">Project</Link>
                                 </li>
                             }
                         </ul>
@@ -69,6 +73,12 @@ export default class Nav extends Component {
                         component={withAuth(Dashboard)}
                         render={(props) => (
                             withAuth(<Dashboard {...props} />)
+                        )}/>
+                    <Route
+                        path="/project"
+                        component={withAuth(Project)}
+                        render={(props) => (
+                            withAuth(<Project {...props} />)
                         )}/>
                     <Route
                         path="/login"
