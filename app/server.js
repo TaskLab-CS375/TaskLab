@@ -103,40 +103,33 @@ app.post("/addProject", function (req, res) {
     let groupID;
     let projectID;
     console.log(body);
-
-    pool.query(
-        "SELECT groupID FROM groups WHERE groups.groupName=$1;",
-        [body.group]
-    )
-        .then(function (response) {
-            console.log("response.rows: ", response.rows);
-            groupID = response.rows[0].groupid;
-            console.log("groupID", groupID);
-        });
 // NEED TO FIX TIMESTAMP PROBLEM
     pool.query(
-        "INSERT INTO Projects (projectName, groupID, projectStatus) VALUES($1, $2, $3) RETURNING *;",
-        [body.name, groupID, body.status]
+        "INSERT INTO Projects (projectName, groupID, projectStatus) VALUES($1, (SELECT groupID FROM groups WHERE groups.groupName=$2), $3) RETURNING projectid;",
+        [body.name, body.group, body.status]
     )
         .then(function (response) {
-            console.log(response.rows);
-            projectID = response.rows[0].projectid;
-            console.log("projectID", projectID);
+            console.log("first insert", response.rows);
         });
-// Change 2 queries into 1
     pool.query(
-        "INSERT INTO UserProjects (projectID, userID) VALUES($1,(SELECT userID FROM Users WHERE Users.email=$2)); SELECT P.projectID, P.projectName, G.groupName, P.projectStatus, P.startTime, P.endTime FROM userGroups UG, users U, projects P, groups G WHERE U.email=$2 and U.userID = UG.userID and P.groupID=UG.groupID and G.groupID=UG.groupID;",
-        [projectID, body.userID]
+            "INSERT INTO UserProjects (projectID, userID) VALUES((SELECT projectid FROM Projects WHERE projectName=$1),(SELECT userID FROM Users WHERE Users.email=$2));",
+            [body.name, body.userID]
+        )
+        .then(function (response) {
+            console.log("inserted");
+        });
+    pool.query(
+        "SELECT P.projectID, P.projectName, G.groupName, P.projectStatus, P.startTime, P.endTime FROM userGroups UG, users U, projects P, groups G WHERE U.email=$1 and U.userID = UG.userID and P.groupID=UG.groupID and G.groupID=UG.groupID;",
+        [body.userID]
     )
         .then(function (response) {
-            console.log(response.rows);
+            console.log("final result", response.rows);
             return res.status(200).json({rows: response.rows});
         })
         .catch(function (error) {
             console.log(error);
             return res.sendStatus(500);
         });
-        // ; INSERT INTO UserProjects (projectID, userID) VALUES($6,$7)
 });
 
 app.get("/getProject", function (req, res) {

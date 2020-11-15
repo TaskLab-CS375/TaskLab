@@ -38,8 +38,10 @@ class Project extends Component  {
             'Content-Type': 'application/json',
             },
             body: JSON.stringify(info),
-        }).then(function (res) {
-            this.setState( { userID: this.state.userID, projects: [...this.state.projects, info] } );
+        }).then(response => response.json())
+        .then((data) => {
+            console.log(data.rows);
+            this.setState( { userID: this.state.userID, projects: data.rows } );
             console.log("Success!");
         })
     }
@@ -55,6 +57,7 @@ class Project extends Component  {
             eachProject['status'] = project.projectstatus;
             rows.push(eachProject);
         });
+        console.log("render table data", rows);
         return rows;
     }
     
@@ -62,7 +65,7 @@ class Project extends Component  {
     render() {
         const userID = this.state.userID;
         const rows = this.renderTableData();
-        console.log(this.state);
+        console.log("new state", this.state);
         console.log(Array.isArray(this.state['projects']));
         return (
             <div>
