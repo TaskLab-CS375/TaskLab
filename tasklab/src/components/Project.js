@@ -30,18 +30,19 @@ class Project extends Component  {
         });
     }
     
-    // addTask = (info) => {
-    //     fetch("/addProject", {
-    //         method: 'POST', 
-    //         headers: {
-    //         'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(info),
-    //     }).then(function (res) {
-    //         this.setState( { projects: res.data.rows })
-    //         console.log("Success!")
-    //     })
-    // }
+    addProject = (info) => {
+        console.log("project.js", info);
+        fetch("/addProject", {
+            method: 'POST', 
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(info),
+        }).then(function (res) {
+            this.setState( { userID: this.state.userID, projects: [...this.state.projects, info] } );
+            console.log("Success!");
+        })
+    }
 
     renderTableData() {
         let rows = [];
@@ -57,17 +58,17 @@ class Project extends Component  {
         return rows;
     }
     
-
+    // PROJECT ITEMS NOT RERENDERING
     render() {
         const userID = this.state.userID;
-        this.renderTableData();
+        const rows = this.renderTableData();
         console.log(this.state);
         console.log(Array.isArray(this.state['projects']));
         return (
             <div>
                 Welcome { userID }!
-                <AddProject />
-                <Projectitem rows={this.renderTableData()} />
+                <AddProject addProject={this.addProject} />
+                <Projectitem rows={rows} />
             </div>
         );
     }
@@ -75,4 +76,4 @@ class Project extends Component  {
 
 
 
-export default withCookies(Project);
+export default withCookies(Project)

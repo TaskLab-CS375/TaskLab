@@ -100,17 +100,43 @@ app.post('/api/login', function (req, res) {
 
 app.post("/addProject", function (req, res) {
     let body = req.body;
+    let groupID;
+    let projectID;
+    console.log(body);
+
     pool.query(
-        "INSERT INTO Projects (projectName, groupID, projectStatus, startTime, endTime) VALUES($1, $2, $3, $4, $5) RETURNING *; INSERT INTO UserProjects (projectID, userID) VALUES($6,$7)",
-        [body.projectName, body.groupID, body.projectStatus, body.startTime, body.endTime, body.projectID, body.userID]
+        "SELECT groupID FROM groups WHERE groups.groupName=$1;",
+        [body.group]
+    )
+        .then(function (response) {
+            console.log("response.rows: ", response.rows);
+            groupID = response.rows[0].groupid;
+            console.log("groupID", groupID);
+        });
+// NEED TO FIX TIMESTAMP PROBLEM
+    pool.query(
+        "INSERT INTO Projects (projectName, groupID, projectStatus) VALUES($1, $2, $3) RETURNING *;",
+        [body.name, groupID, body.status]
     )
         .then(function (response) {
             console.log(response.rows);
-            res.status(200).send(response.rows);
+            projectID = response.rows[0].projectid;
+            console.log("projectID", projectID);
+        });
+// Change 2 queries into 1
+    pool.query(
+        "INSERT INTO UserProjects (projectID, userID) VALUES($1,(SELECT userID FROM Users WHERE Users.email=$2)); SELECT P.projectID, P.projectName, G.groupName, P.projectStatus, P.startTime, P.endTime FROM userGroups UG, users U, projects P, groups G WHERE U.email=$2 and U.userID = UG.userID and P.groupID=UG.groupID and G.groupID=UG.groupID;",
+        [projectID, body.userID]
+    )
+        .then(function (response) {
+            console.log(response.rows);
+            return res.status(200).json({rows: response.rows});
         })
         .catch(function (error) {
+            console.log(error);
             return res.sendStatus(500);
         });
+        // ; INSERT INTO UserProjects (projectID, userID) VALUES($6,$7)
 });
 
 app.get("/getProject", function (req, res) {
