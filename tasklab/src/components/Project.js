@@ -3,6 +3,9 @@ import {withCookies} from "react-cookie";
 import Projectitem from './Projectitem';
 import AddProject from './AddProject';
 
+import {Link, Route, Switch, withRouter, BrowserRouter as Router} from "react-router-dom";
+import Tasks from './Tasks';
+import Dashboard from './Dashboard';
 
 class Project extends Component  {
     constructor(props) {
@@ -23,7 +26,7 @@ class Project extends Component  {
             }
         }).then( (res) => {
             console.log("Success!");
-            console.log(Array.isArray(res.rows));
+            console.log("fetched", res.rows);
             this.setState( { userID: this.state.userID, projects: res.rows});
         }).catch(function (error) {
             console.log(error);
@@ -50,6 +53,7 @@ class Project extends Component  {
         let rows = [];
         this.state['projects'].map( (project) => {
             let eachProject = {};
+            eachProject['id'] = project.projectid;
             eachProject['name'] = project.projectname;
             eachProject['group'] = project.groupname;
             eachProject['start'] = project.starttime;
@@ -61,22 +65,37 @@ class Project extends Component  {
         return rows;
     }
     
-    // PROJECT ITEMS NOT RERENDERING
     render() {
         const userID = this.state.userID;
         const rows = this.renderTableData();
         console.log("new state", this.state);
         console.log(Array.isArray(this.state['projects']));
         return (
-            <div>
-                Welcome { userID }!
-                <AddProject addProject={this.addProject} />
-                <Projectitem rows={rows} />
-            </div>
+                <div>
+                <Switch>
+                <Route path="/tasks" exact render={props => (
+                    <React.Fragment>
+                        <AddProject addProject={this.addProject} />
+                        <br />
+                        <Tasks {...props} />
+                    </React.Fragment>
+                )}
+                    />  
+
+                <Route path="/project" exact render={props => (
+                    <React.Fragment>
+                        <AddProject addProject={this.addProject} />
+                        <br />
+                        <Projectitem rows={rows} />
+                        <Tasks {...props} />
+                    </React.Fragment>
+                )}
+                />
+                   
+                </Switch> 
+                </div>                   
         );
     }
 }
-
-
 
 export default withCookies(Project)

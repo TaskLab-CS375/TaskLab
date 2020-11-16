@@ -100,9 +100,8 @@ app.post('/api/login', function (req, res) {
 
 app.post("/addProject", function (req, res) {
     let body = req.body;
-    let groupID;
-    let projectID;
     console.log(body);
+    // Update table projects, userprojects
 // NEED TO FIX TIMESTAMP PROBLEM
     pool.query(
         "INSERT INTO Projects (projectName, groupID, projectStatus) VALUES($1, (SELECT groupID FROM groups WHERE groups.groupName=$2), $3) RETURNING projectid;",

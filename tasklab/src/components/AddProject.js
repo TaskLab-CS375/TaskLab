@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './Project.css';
 import {withCookies} from "react-cookie";
 
-export class AddProject extends Component {
+class AddProject extends Component {
     constructor(props) {
         super(props);
 
@@ -82,4 +82,4 @@ export class AddProject extends Component {
     }
 }
 
-export default withCookies(AddProject)
+export default withCookies(AddProject);
