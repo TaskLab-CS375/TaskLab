@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {withCookies} from "react-cookie";
+import AddGroups from "./AddGroups";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -16,7 +17,9 @@ class Dashboard extends Component {
 
         return (
             <div>
-                Welcome { userID }!
+                <h1>Welcome { userID }!</h1>
+                <h3>Add Group Here</h3>
+                <AddGroups />
             </div>
         );
     }

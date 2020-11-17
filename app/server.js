@@ -8,6 +8,7 @@ const app = express();
 const reactPath = '/../tasklab/build'
 const projectRoute = require('./projectRoute');
 const autheticationRoute = require('./authenticationRoutes');
+const groupRoute = require('./groupRoutes')
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, reactPath)));
@@ -27,6 +28,7 @@ pool.connect().then(function () {
 
 projectRoute(app, pool);
 autheticationRoute(app, pool);
+groupRoute(app, pool);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
