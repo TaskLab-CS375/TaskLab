@@ -13,7 +13,7 @@ module.exports = function (app, pool) {
         const { firstName, lastName, email, password } = req.body;
 
         if(email === undefined || password === undefined) {
-            return res.status(401).send();
+            return res.status(401).send("Missing email and password");
         }
 
         pool.query(
@@ -38,7 +38,7 @@ module.exports = function (app, pool) {
                         res.cookie('token', token, { httpOnly: true }).sendStatus(200);
                     }).catch(function (error) {
                         console.log(error);
-                        res.status(500).send(error);
+                        res.status(500).send('Server error');
                     })
                 })
         });
@@ -52,7 +52,7 @@ module.exports = function (app, pool) {
             [email]
         ).then(function (response) {
             if (response.rows.length === 0) {
-                return res.status(401).send();
+                return res.status(401).send('Error with username or password');
             }
 
             let hashedPassword = response.rows[0].password;
@@ -66,13 +66,13 @@ module.exports = function (app, pool) {
                         });
                         res.cookie('token', token, { httpOnly: true }).sendStatus(200);
                     } else {
-                        return res.status(401).send();
+                        return res.status(401).send('Error with username or password');
                     }
                 }).catch(function (error) {
-                return res.status(500).send(error);
-            })
+                    return res.status(500).send('Error with username or password');
+                })
         }).catch(function (error) {
-            return res.status(500).send(error);
+            return res.status(500).send('Server error');
         })
     });
 

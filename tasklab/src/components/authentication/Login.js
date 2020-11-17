@@ -8,7 +8,8 @@ class Login extends Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            error: ""
         }
     }
 
@@ -37,13 +38,12 @@ class Login extends Component {
                 window.location.reload();
             } else {
                 res.text().then(message => {
-                    alert(message);
+                    this.setState({ error:message });
                 });
             }
         }).catch(err => {
             err.text().then(errorMessage => {
-                console.log(errorMessage);
-                alert(errorMessage);
+                this.setState({ error:errorMessage });
             });
         })
     }
@@ -53,6 +53,7 @@ class Login extends Component {
             <div id="form-root" className="text-center">
                 <form className="form-signin" onSubmit={this.onSubmit}>
                     <h1 className="h3 mb-3">Login Below!</h1>
+                    <h4 className="text-danger">{this.state.error}</h4>
                     <input
                         type="email"
                         name="email"
