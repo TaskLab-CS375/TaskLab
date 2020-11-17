@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './Form.css'
+import '../Form.css'
 
 export default class Register extends Component {
     constructor(props) {

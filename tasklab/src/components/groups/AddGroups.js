@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './Project.css';
+import '../Project.css';
 import {withCookies} from "react-cookie";
 
 class AddGroups extends Component {

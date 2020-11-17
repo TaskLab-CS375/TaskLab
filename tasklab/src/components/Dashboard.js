@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {withCookies} from "react-cookie";
-import AddGroups from "./AddGroups";
+import AddGroups from "./groups/AddGroups";
 
 class Dashboard extends Component {
     constructor(props) {

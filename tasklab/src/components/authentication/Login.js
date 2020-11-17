@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './Form.css';
+import '../Form.css';
 import {Link} from "react-router-dom";
 import { withCookies, Cookies } from 'react-cookie';
 
