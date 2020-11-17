@@ -3,10 +3,6 @@ import {withCookies} from "react-cookie";
 import Projectitem from './Projectitem';
 import AddProject from './AddProject';
 
-import {Link, Route, Switch, withRouter, BrowserRouter as Router} from "react-router-dom";
-import Tasks from './Tasks';
-import Dashboard from './Dashboard';
-
 class Project extends Component  {
     constructor(props) {
         super(props);
@@ -72,27 +68,9 @@ class Project extends Component  {
         console.log(Array.isArray(this.state['projects']));
         return (
                 <div>
-                <Switch>
-                <Route path="/tasks" exact render={props => (
-                    <React.Fragment>
-                        <AddProject addProject={this.addProject} />
-                        <br />
-                        <Tasks {...props} />
-                    </React.Fragment>
-                )}
-                    />  
-
-                <Route path="/project" exact render={props => (
-                    <React.Fragment>
-                        <AddProject addProject={this.addProject} />
-                        <br />
-                        <Projectitem rows={rows} />
-                        <Tasks {...props} />
-                    </React.Fragment>
-                )}
-                />
-                   
-                </Switch> 
+                    <AddProject addProject={this.addProject} />
+                    <br />
+                    <Projectitem rows={rows} />
                 </div>                   
         );
     }

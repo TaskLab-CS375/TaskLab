@@ -7,6 +7,7 @@ import Register from "./Register";
 import { checkLogin } from "../utilities/auth";
 import Dashboard from "./Dashboard";
 import Project from "./Project";
+import Gantt from "./Gantt";
 
 export default class Nav extends Component {
     constructor(props) {
@@ -48,10 +49,17 @@ export default class Nav extends Component {
                                 isAuthenticated &&
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/dashboard">Dashboard</Link>
-                                </li> &&
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/project">Project</Link>
                                 </li>
+                            }
+                            {isAuthenticated &&
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/project">Projects</Link>
+                                </li>
+                            }
+                            {isAuthenticated &&
+                              <li className="nav-item">
+                              <Link className="nav-link" to="/gantt">Gantt Chart</Link>
+                          </li>
                             }
                         </ul>
                     </div>
@@ -79,6 +87,12 @@ export default class Nav extends Component {
                         component={withAuth(Project)}
                         render={(props) => (
                             withAuth(<Project {...props} />)
+                        )}/>
+                     <Route
+                        path="/gantt"
+                        component={withAuth(Gantt)}
+                        render={(props) => (
+                            withAuth(<Gantt {...props} />)
                         )}/>
                     <Route
                         path="/login"
