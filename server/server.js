@@ -1,5 +1,6 @@
 const pg = require("pg");
 const path = require('path');
+const fs = require('fs');
 const express = require("express");
 const cookieParser = require('cookie-parser');
 
@@ -21,7 +22,7 @@ const hostname = "localhost";
 
 let env;
 
-if (path.existsSync('../env.json')) {
+if (fs.existsSync('../env.json')) {
     env = require("../env.json");
 }else {
     env = {
