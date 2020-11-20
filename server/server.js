@@ -52,7 +52,7 @@ pool.connect().then(function () {
 });
 
 projectRoute(app, pool);
-autheticationRoute(app, pool);
+autheticationRoute(app, pool, env['secret']);
 groupRoute(app, pool);
 
 // The "catchall" handler: for any request that doesn't

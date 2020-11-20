@@ -1,13 +1,10 @@
-module.exports = function (app, pool) {
+module.exports = function (app, pool, secret) {
     const withAuth = require('./middleware');
     const jwt = require('jsonwebtoken');
-    const env = require("../env.json");
 
     const bcrypt = require("bcrypt");
 
     const saltRounds = 10;
-
-    const secret = env["secret"];
 
     app.post('/api/register', function (req, res) {
         const { firstName, lastName, email, password } = req.body;

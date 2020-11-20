@@ -1,5 +1,12 @@
 const jwt = require('jsonwebtoken');
-const secret = require('../env.json')['secret'];
+const fs = require('fs');
+
+let secret;
+if (fs.existsSync('../env.json')) {
+    secret = require('../env.json')['secret']
+}else {
+    secret = process.env.secret
+}
 
 const withAuth = function(req, res, next) {
     const token =
