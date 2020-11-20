@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
-const reactPath = '/../tasklab/build'
+const reactPath = '/../client/build'
 const projectRoute = require('./projectRoute');
 const autheticationRoute = require('./authenticationRoutes');
 const groupRoute = require('./groupRoutes')

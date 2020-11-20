@@ -2,10 +2,10 @@
   "name": "tasklab",
   "version": "1.0.0",
   "description": "",
-  "main": "app/server.js",
+  "main": "server/server.js",
   "scripts": {
-    "build": "npm run build --prefix tasklab",
-    "start": "npm run build && node app/server.js"
+    "build": "npm run build --prefix client",
+    "start": "npm run build && node server/server.js"
   },
   "keywords": [],
   "author": "",
