@@ -18,7 +18,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 const port = process.env.PORT || 3000;
-const hostname = process.env.HOSTNAME || "localhost";
 
 let env;
 
@@ -62,6 +61,6 @@ app.get('*', (req, res) => {
 });
   
 
-app.listen(port, hostname, () => {
+app.listen(port, () => {
     console.log(`Listening at: http://${hostname}:${port}`);
 });
