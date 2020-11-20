@@ -19,11 +19,35 @@ app.use(cookieParser());
 const port = 3000;
 const hostname = "localhost";
 
-const env = require("../env.json");
+let env;
+
+try {
+    env = require("../env.json");
+} catch (e) {
+    env = {
+        "secret": process.env.secret,
+        "database_url": process.env.DATABASE_URL
+    }
+}
+
 const Pool = pg.Pool;
-const pool = new Pool(env["database"]);
+let pool;
+
+if (env.hasOwnProperty("database")) {
+    pool = new Pool(env["database"]);
+} else {
+    const connectionString = env["database_url"]
+    pool = new Pool({
+        connectionString,
+    });
+}
+
 pool.connect().then(function () {
-    console.log(`Connected to database ${env.database.database}`);
+    if (env.hasOwnProperty("database")) {
+        console.log(`Connected to database ${env.database.database}`);
+    } else {
+        console.log(`Connected to database ${env.database_url}`);
+    }
 });
 
 projectRoute(app, pool);

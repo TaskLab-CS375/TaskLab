@@ -4,6 +4,7 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
+    "heroku-prebuild": "npm run build --prefix client",
     "build": "npm run build --prefix client",
     "start": "npm run build && node server/server.js"
   },
