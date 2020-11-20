@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const port = process.env.PORT || 3000;
-const hostname = "localhost";
+const hostname = process.env.HOSTNAME || "localhost";
 
 let env;
 
