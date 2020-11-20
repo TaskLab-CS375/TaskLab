@@ -16,7 +16,7 @@ app.use(express.static("public_html"));
 app.use(express.json());
 app.use(cookieParser());
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const hostname = "localhost";
 
 let env;
