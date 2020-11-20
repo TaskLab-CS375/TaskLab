@@ -21,9 +21,9 @@ const hostname = "localhost";
 
 let env;
 
-try {
+if (path.existsSync('../env.json')) {
     env = require("../env.json");
-} catch (e) {
+}else {
     env = {
         "secret": process.env.secret,
         "database_url": process.env.DATABASE_URL

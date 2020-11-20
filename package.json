@@ -4,9 +4,9 @@
   "description": "",
   "main": "server/server.js",
   "scripts": {
-    "heroku-prebuild": "npm install --prefix client",
+    "heroku-prebuild": "npm install --prefix client && npm build",
     "build": "npm run build --prefix client",
-    "start": "npm run build && node server/server.js"
+    "start": "node server/server.js"
   },
   "keywords": [],
   "author": "",
