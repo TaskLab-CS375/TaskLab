@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
 let secret;
-if (fs.existsSync('../env.json')) {
+if (fs.existsSync('./env.json')) {
     secret = require('../env.json')['secret']
 }else {
     secret = process.env.secret

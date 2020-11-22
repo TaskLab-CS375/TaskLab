@@ -21,7 +21,7 @@ const port = process.env.PORT || 3000;
 
 let env;
 
-if (fs.existsSync('../env.json')) {
+if (fs.existsSync('env.json')) {
     env = require("../env.json");
 }else {
     env = {
