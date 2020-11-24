@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import DataGrid from 'react-data-grid';
 import 'react-data-grid/dist/react-data-grid.css';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,10 +10,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {Link, Route, Switch, withRouter, BrowserRouter as Router} from "react-router-dom";
-import withAuth from "../utilities/withAuth";
-
-import Tasks from './Tasks';
-
 
 const useStyles = makeStyles({
   table: {

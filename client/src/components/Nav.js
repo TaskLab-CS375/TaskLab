@@ -6,8 +6,8 @@ import Login from "./authentication/Login";
 import Register from "./authentication/Register";
 import { checkLogin } from "../utilities/auth";
 import Dashboard from "./Dashboard";
-import Project from "./Project";
-import Gantt from "./Gantt";
+import Project from "./projects/Project";
+import Gantt from "./projects/Gantt";
 
 export default class Nav extends Component {
     constructor(props) {
