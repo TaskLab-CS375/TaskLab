@@ -8,6 +8,7 @@ import { checkLogin } from "../utilities/auth";
 import Dashboard from "./Dashboard";
 import Project from "./projects/Project";
 import Gantt from "./projects/Gantt";
+import Tasks from "./projects/Tasks";
 
 export default class Nav extends Component {
     constructor(props) {
@@ -94,6 +95,11 @@ export default class Nav extends Component {
                         render={(props) => (
                             withAuth(<Gantt {...props} />)
                         )}/>
+                    <Route
+                        path="/tasks*"
+                        render={(props) => (
+                            <Tasks {...props} />
+                        )} />
                     <Route
                         path="/login"
                         render={(props) => (

@@ -45,8 +45,8 @@ class Projectitem extends Component {
                     <TableBody>
                     {rows.map((row) => (
                         <TableRow key={row.id}>
-                        <TableCell component="th" scope="row"><Link to={"/tasks"}>{row.name}</Link></TableCell>
-                        {/* <TableCell component="th" scope="row"><Link to={"/tasks?projectid=".concat(row.id)}>{row.name}</Link></TableCell> */}
+                        {/* <TableCell component="th" scope="row"><Link to={"/tasks"}>{row.name}</Link></TableCell> */}
+                        <TableCell component="th" scope="row"><Link to={"/tasks?projectid=".concat(row.id)}>{row.name}</Link></TableCell>
                         <TableCell align="right">{row.group}</TableCell>
                         <TableCell align="right">{row.start}</TableCell>
                         <TableCell align="right">{row.end}</TableCell>

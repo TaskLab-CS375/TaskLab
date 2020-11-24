@@ -5,7 +5,6 @@ import Chart from "react-google-charts";
 class Tasks extends Component {
     constructor(props) {
         super(props);
-
         const { cookies } = props;
         this.state = {
             userID: cookies.get('userID') || ''
@@ -15,9 +14,13 @@ class Tasks extends Component {
     render() {
         const { userID } = this.state;
 
+        const query = new URLSearchParams(this.props.location.search);
+        const projectid = query.get("projectid");
+        console.log(projectid);
+        
         return (
             <div>
-                Here are all the tasks {userID}
+                Here are all the tasks {userID} for project id {projectid}
                 <Chart
                     width={'100%'}
                     height={'400px'}
