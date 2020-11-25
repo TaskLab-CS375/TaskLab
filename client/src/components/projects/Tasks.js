@@ -14,13 +14,13 @@ class Tasks extends Component {
     render() {
         const { userID } = this.state;
 
-        const query = new URLSearchParams(this.props.location.search);
-        const projectid = query.get("projectid");
-        console.log(projectid);
-        
+        // const query = new URLSearchParams(this.props.location.search);
+        // const projectid = query.get("projectid");
+        // console.log(projectid);
+
         return (
             <div>
-                Here are all the tasks {userID} for project id {projectid}
+                Here are all the tasks {userID} for project id 
                 <Chart
                     width={'100%'}
                     height={'400px'}

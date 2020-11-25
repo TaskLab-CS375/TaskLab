@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import '../Project.css';
 import {withCookies} from "react-cookie";
 
+import DatePicker from 'react-datepicker';
+ 
+import "react-datepicker/dist/react-datepicker.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 class AddProject extends Component {
     constructor(props) {
         super(props);
@@ -11,21 +17,35 @@ class AddProject extends Component {
             userID: cookies.get('userID') || '',
             name: '',
             group: '',
-            start: '',
-            end: '',
+            start: new Date(),
+            end: new Date(),
             status: ''
         };
     }
 
     onSubmit = (e) => {
         e.preventDefault();
+        console.log("start Date", this.state.start);
+        console.log("end Date", this.state.end);
         this.props.addProject(this.state);
-        this.setState({ userID: this.state.userID, name: '', group: '', start: '', end: '', status: ''});
+        this.setState({ userID: this.state.userID, name: '', group: '', start: new Date(), end: new Date(), status: ''});
     }
 
     onChange = (e) => {
         console.log(e.target.name, e.target.value);
         this.setState({ [e.target.name]: e.target.value });
+    }
+    
+    handleStartDateChange = (date) => {
+        this.setState({
+            start: date
+        })
+    }
+
+    handleEndDateChange = (date) => {
+        this.setState({
+            end: date
+        })
     }
 
     render() {
@@ -47,21 +67,19 @@ class AddProject extends Component {
                 value={this.state.group}
                 onChange={this.onChange}
                 />
-                <input 
-                type="text"
-                name="start"
-                placeholder="Start Time"
+                <DatePicker
+                selected={ this.state.start }
+                onChange={ this.handleStartDateChange }
                 style={{ flex: '3', padding: '5px'}}
-                value={this.state.start}
-                onChange={this.onChange}
+                name="startDate"
+                dateFormat="MM/dd/yyyy"
                 />
-                <input 
-                type="text"
-                name="end"
-                placeholder="End Time"
+                <DatePicker
+                selected={ this.state.end }
+                onChange={ this.handleEndDateChange }
                 style={{ flex: '3', padding: '5px'}}
-                value={this.state.end}
-                onChange={this.onChange}
+                name="endDate"
+                dateFormat="MM/dd/yyyy"
                 />
                 <input 
                 type="text"

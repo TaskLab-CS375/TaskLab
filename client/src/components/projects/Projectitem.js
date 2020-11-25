@@ -9,57 +9,95 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {Link, Route, Switch, withRouter, BrowserRouter as Router} from "react-router-dom";
+import {Link,withRouter} from "react-router-dom";
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+// const useStyles = makeStyles({
+//   table: {
+//     minWidth: 650,
+//   },
+// });
 
+export default function Projectitem(props) {
 
-class Projectitem extends Component {    
-    constructor(props) {
-        super(props);
-        const { cookies } = props;
-    }
+    const rows = props.rows
+    console.log(rows);
+    console.log(rows.length);
 
-    render() {
-        const rows = this.props.rows
-        console.log(rows);
-        console.log(rows.length);
-        return (
-            <div>
-                <TableContainer component={Paper}>
-                <Table className="Project table">
-                    <TableHead>
-                    <TableRow>
-                        <TableCell>Project Name</TableCell>
-                        <TableCell align="center">Group</TableCell>
-                        <TableCell align="center">Start</TableCell>
-                        <TableCell align="center">End</TableCell>
-                        <TableCell align="center">Status</TableCell>
+    return (
+        <div>
+            testing
+            {/* <TableContainer component={Paper}>
+            <Table className="Project table">
+                <TableHead>
+                <TableRow>
+                    <TableCell>Project Name</TableCell>
+                    <TableCell align="center">Group</TableCell>
+                    <TableCell align="center">Start</TableCell>
+                    <TableCell align="center">End</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                </TableRow>
+                </TableHead>
+
+                <TableBody>
+                {rows.map((row) => (
+                    <TableRow key={row.id}>
+                    <TableCell component="th" scope="row"><Link to={"/tasks"}>{row.name}</Link></TableCell>
+                    {/* <TableCell component="th" scope="row"><Link to={"/tasks?projectid=".concat(row.id)}>{row.name}</Link></TableCell> */}
+                    {/* <TableCell align="right">{row.group}</TableCell>
+                    <TableCell align="right">{row.start}</TableCell>
+                    <TableCell align="right">{row.end}</TableCell>
+                    <TableCell align="right">{row.status}</TableCell>
                     </TableRow>
-                    </TableHead>
+                ))}
+                </TableBody>
+            </Table>
+            </TableContainer> */} */}
 
-                    <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.id}>
-                        {/* <TableCell component="th" scope="row"><Link to={"/tasks"}>{row.name}</Link></TableCell> */}
-                        <TableCell component="th" scope="row"><Link to={"/tasks?projectid=".concat(row.id)}>{row.name}</Link></TableCell>
-                        <TableCell align="right">{row.group}</TableCell>
-                        <TableCell align="right">{row.start}</TableCell>
-                        <TableCell align="right">{row.end}</TableCell>
-                        <TableCell align="right">{row.status}</TableCell>
-                        </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
-                </TableContainer>
-
-            </div>
-        );
-    }
+        </div>
+    );
 }
+// class Projectitem extends Component {    
+//     constructor(props) {
+//         super(props);
+//         const { cookies } = props;
+//     }
 
-export default withRouter(Projectitem);
+//     render() {
+//         const rows = this.props.rows
+//         console.log(rows);
+//         console.log(rows.length);
+//         return (
+//             <div>
+//                 <TableContainer component={Paper}>
+//                 <Table className="Project table">
+//                     <TableHead>
+//                     <TableRow>
+//                         <TableCell>Project Name</TableCell>
+//                         <TableCell align="center">Group</TableCell>
+//                         <TableCell align="center">Start</TableCell>
+//                         <TableCell align="center">End</TableCell>
+//                         <TableCell align="center">Status</TableCell>
+//                     </TableRow>
+//                     </TableHead>
+
+//                     <TableBody>
+//                     {rows.map((row) => (
+//                         <TableRow key={row.id}>
+//                         {/* <TableCell component="th" scope="row"><Link to={"/tasks"}>{row.name}</Link></TableCell> */}
+//                         <TableCell component="th" scope="row"><Link to={"/tasks?projectid=".concat(row.id)}>{row.name}</Link></TableCell>
+//                         <TableCell align="right">{row.group}</TableCell>
+//                         <TableCell align="right">{row.start}</TableCell>
+//                         <TableCell align="right">{row.end}</TableCell>
+//                         <TableCell align="right">{row.status}</TableCell>
+//                         </TableRow>
+//                     ))}
+//                     </TableBody>
+//                 </Table>
+//                 </TableContainer>
+
+//             </div>
+//         );
+//     }
+// }
+
+// export default withRouter(Projectitem);
