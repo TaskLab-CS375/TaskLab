@@ -1,9 +1,20 @@
 table, tr, td, th {
-    background: white;
-    border: 1px solid black;
-    border-collapse: collapse;
+    border: 1px solid grey;
 }
 
 table, tr{
-    width:100%;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+th, td {
+padding: 8px;
+text-align: left;
+border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color:#f5f5f5;}
+
+#project-table-container {
+    border: 2px solid grey;
 }

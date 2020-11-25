@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {withCookies} from "react-cookie";
 import Tasks from "./Tasks";
 
-class Project extends Component  {
+
+class Gantt extends Component  {
     constructor(props) {
         super(props);
 
@@ -21,4 +22,4 @@ class Project extends Component  {
     }
 }
 
-export default withCookies(Project)
+export default withCookies(Gantt)

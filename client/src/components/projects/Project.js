@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {withCookies} from "react-cookie";
 import Projectitem from './Projectitem';
+import ProjectTable from './ProjectTable';
 import AddProject from './AddProject';
 
 class Project extends Component  {

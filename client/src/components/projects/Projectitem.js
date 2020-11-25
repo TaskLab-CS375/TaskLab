@@ -1,21 +1,4 @@
-import React, { Component } from 'react';
-import 'react-data-grid/dist/react-data-grid.css';
-
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import {Link,withRouter} from "react-router-dom";
-
-// const useStyles = makeStyles({
-//   table: {
-//     minWidth: 650,
-//   },
-// });
+import {Link} from "react-router-dom";
 
 export default function Projectitem(props) {
 
@@ -24,80 +7,31 @@ export default function Projectitem(props) {
     console.log(rows.length);
 
     return (
-        <div>
-            testing
-            {/* <TableContainer component={Paper}>
-            <Table className="Project table">
-                <TableHead>
-                <TableRow>
-                    <TableCell>Project Name</TableCell>
-                    <TableCell align="center">Group</TableCell>
-                    <TableCell align="center">Start</TableCell>
-                    <TableCell align="center">End</TableCell>
-                    <TableCell align="center">Status</TableCell>
-                </TableRow>
-                </TableHead>
+        <div id="project-table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th align="center">Group</th>
+                    <th align="center">Start</th>
+                    <th align="center">End</th>
+                    <th align="center">Status</th>
+                </tr>
+                </thead>
 
-                <TableBody>
+                <tbody>
                 {rows.map((row) => (
-                    <TableRow key={row.id}>
-                    <TableCell component="th" scope="row"><Link to={"/tasks"}>{row.name}</Link></TableCell>
-                    {/* <TableCell component="th" scope="row"><Link to={"/tasks?projectid=".concat(row.id)}>{row.name}</Link></TableCell> */}
-                    {/* <TableCell align="right">{row.group}</TableCell>
-                    <TableCell align="right">{row.start}</TableCell>
-                    <TableCell align="right">{row.end}</TableCell>
-                    <TableCell align="right">{row.status}</TableCell>
-                    </TableRow>
+                    <tr key={row.id}>
+                    <th component="th" scope="row"><Link to={"/tasks?projectid=".concat(row.id)}>{row.name}</Link></th>
+                    <th align="right">{row.group}</th>
+                    <th align="right">{row.start}</th>
+                    <th align="right">{row.end}</th>
+                    <th align="right">{row.status}</th>
+                    </tr>
                 ))}
-                </TableBody>
-            </Table>
-            </TableContainer> */} */}
+                </tbody>
+            </table>
 
         </div>
     );
 }
-// class Projectitem extends Component {    
-//     constructor(props) {
-//         super(props);
-//         const { cookies } = props;
-//     }
-
-//     render() {
-//         const rows = this.props.rows
-//         console.log(rows);
-//         console.log(rows.length);
-//         return (
-//             <div>
-//                 <TableContainer component={Paper}>
-//                 <Table className="Project table">
-//                     <TableHead>
-//                     <TableRow>
-//                         <TableCell>Project Name</TableCell>
-//                         <TableCell align="center">Group</TableCell>
-//                         <TableCell align="center">Start</TableCell>
-//                         <TableCell align="center">End</TableCell>
-//                         <TableCell align="center">Status</TableCell>
-//                     </TableRow>
-//                     </TableHead>
-
-//                     <TableBody>
-//                     {rows.map((row) => (
-//                         <TableRow key={row.id}>
-//                         {/* <TableCell component="th" scope="row"><Link to={"/tasks"}>{row.name}</Link></TableCell> */}
-//                         <TableCell component="th" scope="row"><Link to={"/tasks?projectid=".concat(row.id)}>{row.name}</Link></TableCell>
-//                         <TableCell align="right">{row.group}</TableCell>
-//                         <TableCell align="right">{row.start}</TableCell>
-//                         <TableCell align="right">{row.end}</TableCell>
-//                         <TableCell align="right">{row.status}</TableCell>
-//                         </TableRow>
-//                     ))}
-//                     </TableBody>
-//                 </Table>
-//                 </TableContainer>
-
-//             </div>
-//         );
-//     }
-// }
-
-// export default withRouter(Projectitem);
