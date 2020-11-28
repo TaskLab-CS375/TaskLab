@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {withCookies} from "react-cookie";
 import Projectitem from './Projectitem';
-import ProjectTable from './ProjectTable';
 import AddProject from './AddProject';
 
 class Project extends Component  {
@@ -31,7 +30,7 @@ class Project extends Component  {
     }
     
     addProject = (info) => {
-        console.log("project.js", info);
+        console.log("send to back end !!!!!", info);
         fetch("/addProject", {
             method: 'POST', 
             headers: {
@@ -54,7 +53,7 @@ class Project extends Component  {
             eachProject['name'] = project.projectname;
             eachProject['group'] = project.groupname;
             eachProject['start'] = project.starttime;
-            eachProject['end'] = project.endTime;
+            eachProject['end'] = project.endtime;
             eachProject['status'] = project.projectstatus;
             rows.push(eachProject);
         });

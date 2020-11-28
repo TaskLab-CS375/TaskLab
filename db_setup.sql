@@ -27,8 +27,8 @@ CREATE TABLE Projects (
     projectName VARCHAR(50),
     groupID INTEGER REFERENCES Groups(groupID),
     projectStatus VARCHAR(50),
-    startTime timestamp,
-    endTime timestamp
+    startTime timestamptz,
+    endTime timestamptz
 );
 
 /* Link users to projects */

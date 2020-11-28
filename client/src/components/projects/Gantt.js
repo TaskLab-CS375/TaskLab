@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {withCookies} from "react-cookie";
-import Tasks from "./Tasks";
-
+import GanttItem from "./GanttItem";
+import SelectGantt from "./SelectGantt";
 
 class Gantt extends Component  {
     constructor(props) {
@@ -16,7 +16,8 @@ class Gantt extends Component  {
         return (
                 <div>
                     New Page
-                    <Tasks />
+                    <SelectGantt />
+                    <GanttItem />
                 </div>                   
         );
     }

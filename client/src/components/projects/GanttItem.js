@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {withCookies} from "react-cookie";
 import Chart from "react-google-charts";
 
-class Tasks extends Component {
+class GanttItem extends Component {
     constructor(props) {
         super(props);
         const { cookies } = props;
@@ -89,4 +89,4 @@ class Tasks extends Component {
     }
 }
 
-export default withCookies(Tasks);
+export default withCookies(GanttItem);
