@@ -2,8 +2,8 @@ module.exports = function(app, pool) {
     app.post("/addProject", function (req, res) {
         let body = req.body;
         console.log(body.start, body.end);
+        
         // Update table projects, userprojects
-    // NEED TO FIX TIMESTAMP PROBLEM
         pool.query(
             "INSERT INTO Projects (projectName, groupID, projectStatus,startTime,endTime) VALUES($1, (SELECT groupID FROM groups WHERE groups.groupName=$2), $3, $4, $5) RETURNING projectid;",
             [body.name, body.group, body.status, body.start, body.end]

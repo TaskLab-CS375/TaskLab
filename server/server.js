@@ -7,7 +7,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 const reactPath = '/../client/build'
-const projectRoute = require('./projectRoute');
+const projectRoutes = require('./projectRoutes');
+const taskRoutes = require('./taskRoutes');
 const autheticationRoute = require('./authenticationRoutes');
 const groupRoute = require('./groupRoutes')
 
@@ -50,7 +51,8 @@ pool.connect().then(function () {
     }
 });
 
-projectRoute(app, pool);
+projectRoutes(app, pool);
+taskRoutes(app,pool);
 autheticationRoute(app, pool, env['secret']);
 groupRoute(app, pool);
 

@@ -13,7 +13,37 @@ class GanttItem extends Component {
 
     render() {
         const { userID } = this.state;
+        const rows = this.props.rows;
+        // const rows = [{
+        //     name: 'research',
+        //     description: 'somehow',
+        //     start: new Date(2020, 1, 1),
+        //     end: new Date(2021, 12, 4),
+        //     duration: 100,
+        //     percentComplete: 100,
+        //     dependencies: null
+        // }]
 
+        // const rows = [                   
+        //     [
+        //     'Research',
+        //     'Find sources',
+        //     new Date(2010, 1, 1),
+        //     new Date(2020, 10, 5),
+        //     null,
+        //     100,
+        //     null,
+        //     ],
+        //     [
+        //         'Research2',
+        //         'Find sources',
+        //         new Date(2019, 10, 1),
+        //         new Date(2022, 5, 6),
+        //         null,
+        //         100,
+        //         null,
+        //     ],
+        // ]
         // const query = new URLSearchParams(this.props.location.search);
         // const projectid = query.get("projectid");
         // console.log(projectid);
@@ -26,62 +56,26 @@ class GanttItem extends Component {
                     height={'400px'}
                     chartType="Gantt"
                     loader={<div>Loading Chart</div>}
-                    data={[
-                        [
-                        { type: 'string', label: 'Task ID' },
+                    data={
+                        [[
                         { type: 'string', label: 'Task Name' },
+                        { type: 'string', label: 'Task Description' },
                         { type: 'date', label: 'Start Date' },
                         { type: 'date', label: 'End Date' },
                         { type: 'number', label: 'Duration' },
                         { type: 'number', label: 'Percent Complete' },
                         { type: 'string', label: 'Dependencies' },
-                        ],
-                        [
-                        'Research',
-                        'Find sources',
-                        new Date(2015, 0, 1),
-                        new Date(2015, 0, 5),
-                        null,
-                        100,
-                        null,
-                        ],
-                        [
-                        'Write',
-                        'Write paper',
-                        null,
-                        new Date(2015, 0, 9),
-                        3 * 24 * 60 * 60 * 1000,
-                        25,
-                        'Research,Outline',
-                        ],
-                        [
-                        'Cite',
-                        'Create bibliography',
-                        null,
-                        new Date(2015, 0, 7),
-                        1 * 24 * 60 * 60 * 1000,
-                        20,
-                        'Research',
-                        ],
-                        [
-                        'Complete',
-                        'Hand in paper',
-                        null,
-                        new Date(2015, 0, 10),
-                        1 * 24 * 60 * 60 * 1000,
-                        0,
-                        'Cite,Write',
-                        ],
-                        [
-                        'Outline',
-                        'Outline paper',
-                        null,
-                        new Date(2015, 0, 6),
-                        1 * 24 * 60 * 60 * 1000,
-                        100,
-                        'Research',
-                        ],
-                    ]}
+                        ]].concat(rows)
+                        // [
+                        // 'Research',
+                        // 'Find sources',
+                        // new Date(2015, 0, 1),
+                        // new Date(2015, 0, 5),
+                        // null,
+                        // 100,
+                        // null,
+                        // ],
+                    }
                     rootProps={{ 'data-testid': '1' }}
                     />
             </div>
