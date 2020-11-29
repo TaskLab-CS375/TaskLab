@@ -17,7 +17,6 @@ class GanttItem extends Component {
         if (this.props.showGantt & rows.length > 0 ) {
             return (
                 <div>
-                    Here are all the tasks {userID} for project id 
                     <Chart
                         width={'100%'}
                         height={'400px'}
@@ -42,7 +41,7 @@ class GanttItem extends Component {
         else if (this.props.showGantt) {
             return (
                 <div>
-                    Invalid project or no tasks associated with this project.
+                    No tasks associated with this project.
                 </div>
             );
         }

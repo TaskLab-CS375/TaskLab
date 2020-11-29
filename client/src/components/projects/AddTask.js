@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import "./AddTask.css"
 
 class AddTask extends Component {
     constructor(props) {
@@ -48,7 +49,7 @@ class AddTask extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onSubmit} style={{ display: 'flex' }}>
+            <form onSubmit={this.onSubmit} style={{ display: 'flex', flexDirection: 'row', height: '40px'}}>
                 <input 
                 type="text"
                 name="name"
@@ -57,17 +58,20 @@ class AddTask extends Component {
                 value={this.state.name}
                 onChange={this.onChange}
                 />
+                <div className="customDatePickerWidth">
                 <DatePicker
                 selected={ this.state.start }
                 onChange={ this.handleStartDateChange }
-                style={{ flex: '3', padding: '5px'}}
+                style={{ flex: '3', padding: '5px', height: '40px'}}
                 name="startDate"
                 dateFormat="MM/dd/yyyy"
-                />
+                />    
+                </div>
+
                 <DatePicker
                 selected={ this.state.end }
                 onChange={ this.handleEndDateChange }
-                style={{ flex: '3', padding: '5px'}}
+                style={{ flex: '3', padding: '5px', height: 'inherit'}}
                 name="endDate"
                 dateFormat="MM/dd/yyyy"
                 />

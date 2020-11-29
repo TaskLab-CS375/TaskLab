@@ -5,6 +5,8 @@ import AddTask from "./AddTask";
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+
+import "./Gantt.css"
  
 
 class Gantt extends Component  {
@@ -17,7 +19,8 @@ class Gantt extends Component  {
             projectID: null,
             tasks: [],
             needUpdate: false,
-            projectList: []
+            projectList: [],
+            error: false
         };
 
         const query = new URLSearchParams(this.props.location.search);
@@ -39,7 +42,7 @@ class Gantt extends Component  {
             }).then( (res) => {
                 console.log("Success!");
                 console.log("fetched", res.rows);
-                this.setState( { userID: this.state.userID, tasks: res.rows, projectID: this.state.projectID, needUpdate: false, projectList: this.state.projectList});
+                this.setState( { ...this.state, tasks: res.rows, needUpdate: false});
             }).catch(function (error) {
                 console.log(error);
             });
@@ -57,7 +60,7 @@ class Gantt extends Component  {
                 options.push({ value: project.projectid, label: project.projectname },)
             });
             console.log("options", options)
-            this.setState( { userID: this.state.userID, tasks: this.state.tasks, projectID: this.state.projectID, needUpdate: false, projectList: options});
+            this.setState( { ...this.state, needUpdate: false, projectList: options});
         }).catch(function (error) {
             console.log(error);
         });
@@ -65,16 +68,17 @@ class Gantt extends Component  {
     }
 
     componentDidUpdate() {
-        console.log("starting to fetch");
-        if (this.state.projectID & this.state.needUpdate) {
+        console.log("starting to fetch tasks");
+
+        // update task list
+        if (this.state.projectID!=null & this.state.needUpdate) {
             fetch(`/getTask?projectID=${this.state.projectID}`).then(function (response) {
                 if (response.status === 200) {
                     return response.json();
                 }
             }).then( (res) => {
-                console.log("Success!");
-                console.log("fetched", res.rows);
-                this.setState( { userID: this.state.userID, tasks: res.rows, projectID: this.state.projectID, needUpdate: false, projectList: this.state.projectList});
+                console.log("componentDidUpdate");
+                this.setState( { ...this.state, tasks: res.rows,needUpdate: false});
             }).catch(function (error) {
                 console.log(error);
             });
@@ -83,10 +87,14 @@ class Gantt extends Component  {
 
     addInfo = (info) => {
         console.log("send to back end !!!!!", info);
-        if (!info){
+
+        // input validation
+        if (!info || info.name==='' || info.start==='' || info.end==='' || info.percentcomplete==='') {
             console.log("nothing");
+            this.setState( { ...this.state, error: true});
             return;
         }
+        
         fetch(`/addTask?projectID=${this.state.projectID}`, {
             method: 'POST', 
             headers: {
@@ -96,7 +104,7 @@ class Gantt extends Component  {
         }).then(response => response.json())
         .then((res) => {
             console.log(res.rows);
-            this.setState( { userID: this.state.userID, tasks: res.rows, projectID: this.state.projectID, needUpdate: true, projectList: this.state.projectList});
+            this.setState( { ...this.state, tasks: res.rows, needUpdate: true, error: false});
             console.log("Success!");
         })
     }
@@ -121,7 +129,7 @@ class Gantt extends Component  {
 
     onSelectDropDown = (e) => {
         console.log(e.value);
-        this.setState( { userID: this.state.userID, projectID: e.value, tasks: [], needUpdate: true, projectList: this.state.projectList});
+        this.setState( { ...this.state, projectID: e.value, tasks: [], needUpdate: true});
     }
 
 
@@ -143,7 +151,17 @@ class Gantt extends Component  {
             });
         };
 
-        this.addInfo(null);
+        // Project Message
+        let projectMessage;
+        if (showGantt) {
+            projectMessage=<p>Here are all the tasks for <span className="project-name">{defaultOption.label}</span></p>
+        }
+
+        // Display Error Message Option
+        let errorMessageBox = <br />;
+        if (this.state.error) {
+            errorMessageBox= <p style={{color:'red'}}>Invalid Format. Please fill in all fields.</p>
+        };
 
         return (
                 <div>
@@ -151,6 +169,10 @@ class Gantt extends Component  {
                     <Dropdown options={options} onChange={this.onSelectDropDown} value={defaultOption} placeholder="Select a project" />;
 
                     <AddTask addInfo={this.addInfo} />
+
+                    {errorMessageBox}
+
+                    {projectMessage}
                     <GanttItem showGantt={showGantt} rows={rows} />
                 </div>                   
         );
