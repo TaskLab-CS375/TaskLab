@@ -166,7 +166,7 @@ class Gantt extends Component  {
         return (
                 <div>
                     Select the project you want to view:
-                    <Dropdown options={options} onChange={this.onSelectDropDown} value={defaultOption} placeholder="Select a project" />;
+                    <Dropdown options={options} onChange={this.onSelectDropDown} value={defaultOption} placeholder="Select a project" />
 
                     <AddTask addInfo={this.addInfo} />
 

@@ -1,0 +1,25 @@
+#form-table table{
+    width: 100%;
+    border: 1px solid black;
+  }
+
+#form-table tr {
+    width:80%;
+    margin:auto;
+}
+
+#project-name {
+    width: 25%;
+}
+
+#group-name {
+    width: 20%;
+}
+
+#task-name {
+    width: 30%;
+}
+
+#form-table td:last-child {
+    width: 10%;
+}

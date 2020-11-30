@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import '../Project.css';
 import {withCookies} from "react-cookie";
  
 import DatePicker from 'react-datepicker';
  
-import "react-datepicker/dist/react-datepicker.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import "react-datepicker/dist/react-datepicker.css";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
-import "./AddTask.css"
+import "./FormTable.css"
 
 class AddTask extends Component {
     constructor(props) {
@@ -49,46 +48,67 @@ class AddTask extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onSubmit} style={{ display: 'flex', flexDirection: 'row', height: '40px'}}>
-                <input 
-                type="text"
-                name="name"
-                placeholder="Add New Task ..."
-                style={{ flex: '5', padding: '5px'}}
-                value={this.state.name}
-                onChange={this.onChange}
-                />
-                <div className="customDatePickerWidth">
-                <DatePicker
-                selected={ this.state.start }
-                onChange={ this.handleStartDateChange }
-                style={{ flex: '3', padding: '5px', height: '40px'}}
-                name="startDate"
-                dateFormat="MM/dd/yyyy"
-                />    
-                </div>
+            <form onSubmit={this.onSubmit}>
+                <table id="form-table" style={{display: 'block'}}>
+                    <tr>
+                        <td id="task-name">
+                            Task Name: 
+                            <input 
+                            type="text"
+                            name="name"
+                            style={{ width:'100%', height: '30px', padding: '5px'}}
+                            value={this.state.name}
+                            onChange={this.onChange}
+                            /> </td>
+                        <td>
+                            Start Date: 
+                            <div className="customDatePickerWidth">
+                            <DatePicker
+                            selected={ this.state.start }
+                            onChange={ this.handleStartDateChange }
+                            style={{ padding: '5px', width:'100%', height: '100%'}}
+                            name="startDate"
+                            dateFormat="MM/dd/yyyy"
+                            />    
+                            </div>
+                        </td>
 
-                <DatePicker
-                selected={ this.state.end }
-                onChange={ this.handleEndDateChange }
-                style={{ flex: '3', padding: '5px', height: 'inherit'}}
-                name="endDate"
-                dateFormat="MM/dd/yyyy"
-                />
-                <input 
-                type="text"
-                name="percentComplete"
-                placeholder="Percent Completed"
-                style={{ flex: '3', padding: '5px'}}
-                value={this.state.percentComplete}
-                onChange={this.onChange}
-                />
-                <input
-                type="submit"
-                value="Submit"
-                className="btn"
-                style={{flex: '1', background: 'lightgrey'}}
-                />
+                        <td>
+                            End Date: 
+                            <div className="customDatePickerWidth">
+                                <DatePicker
+                                selected={ this.state.end }
+                                onChange={ this.handleEndDateChange }
+                                style={{ padding: '5px', width:'100%', height: '100%'}}
+                                name="endDate"
+                                dateFormat="MM/dd/yyyy"
+                                />
+                            </div>
+                           
+                        </td>
+
+                        <td>
+                            Percent Completed: 
+                            <input 
+                            type="text"
+                            name="percentComplete"
+                            style={{padding: '5px', width:'100%', height: '30px'}}
+                            value={this.state.percentComplete}
+                            onChange={this.onChange}
+                            />
+                        </td>
+                        <td>
+                            <br />
+                            <input
+                            type="submit"
+                            value="Submit"
+                            className="btn"
+                            style={{background: 'lightgrey', width:'100%', height: '100%'}}
+                            />
+                        </td>
+                    </tr>
+                </table>
+
             </form>
         )
     }
