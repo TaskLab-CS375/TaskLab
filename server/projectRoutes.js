@@ -45,4 +45,34 @@ module.exports = function(app, pool) {
                 return res.sendStatus(500);
             });
     });
+
+    app.delete("/deleteProject", function (req, res) {
+        let projectID = req.query.projectID;
+        console.log(projectID, "going to delete");
+
+        // delete from Projects table, UserProjects table, Tasks table
+        pool.query("DELETE FROM userProjects WHERE projectid=$1;", [projectID])
+            .then(function (response) {
+                console.log("delete from userProjects");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        pool.query("DELETE FROM Tasks WHERE projectid=$1;", [projectID])
+            .then(function (response) {
+                console.log("delete from Tasks");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        pool.query("DELETE FROM Projects WHERE projectid=$1;", [projectID])
+            .then(function (response) {
+                console.log("delete from Projects");
+                return res.sendStatus(200);
+            })
+            .catch(function (error) {
+                console.log(error);
+                return res.sendStatus(500);
+            });
+    });
 }

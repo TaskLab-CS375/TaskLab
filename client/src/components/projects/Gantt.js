@@ -26,7 +26,7 @@ class Gantt extends Component  {
         const query = new URLSearchParams(this.props.location.search);
         const projectid = query.get("projectid");
         if (projectid) {
-            this.state.projectID = projectid;
+            this.state.projectID = parseInt(projectid);
             console.log("change because of query")
             console.log(this.state);
         }
@@ -141,19 +141,23 @@ class Gantt extends Component  {
 
         let showGantt = false;
         let defaultOption = null;
-        if (this.state.projectID) {
-            showGantt = true;
+        console.log("hey", this.state.projectID);
+        console.log("options",options);
+        console.log("showGantt", showGantt);
+        if (this.state.projectID != '') {
             options.map( (option) => {
                 if (option.value == this.state.projectID) {
+                    showGantt = true;
                     defaultOption = option;
                     console.log("matching projectid", option.value)
                 };
             });
         };
+        console.log("defaultoption", defaultOption);
 
         // Project Message
         let projectMessage;
-        if (showGantt) {
+        if (showGantt && defaultOption != null) {
             projectMessage=<p>Here are all the tasks for <span className="project-name">{defaultOption.label}</span></p>
         }
 
@@ -163,6 +167,7 @@ class Gantt extends Component  {
             errorMessageBox= <p style={{color:'red'}}>Invalid Format. Please fill in all fields.</p>
         };
 
+        console.log("showGantt", showGantt);
         return (
                 <div>
                     Select the project you want to view:

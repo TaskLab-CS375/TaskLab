@@ -38,4 +38,20 @@ module.exports = function(app, pool) {
                 return res.sendStatus(500);
             });
     });
+
+    // app.delete("/deleteProject", function (req, res) {
+    //     let taskID = req.query.taskID;
+    //     console.log(taskID, "going to delete");
+
+    //     // delete from Projects table, UserProjects table, Tasks table
+    //     pool.query("DELETE FROM Tasks WHERE taskid=$1;", [taskID])
+    //         .then(function (response) {
+    //             console.log("delete from Tasks");
+    //             return res.sendStatus(200);
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //             return res.sendStatus(500);
+    //         });
+    // });
 }

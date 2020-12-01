@@ -45,6 +45,36 @@ class Project extends Component  {
         })
     }
 
+    deleteProject = (projectID) => {
+        console.log("initating delete for", projectID);
+        fetch(`/deleteProject?projectID=${projectID}`, {
+            method: 'delete'
+          }).then(function (response) {
+            if (response.status === 200) {
+                return response.json();
+            }
+        }).then( (res) => {
+            console.log("Success!");
+            // console.log("fetched", res.rows);
+            // this.setState( { userID: this.state.userID, projects: res.rows});
+        }).catch(function (error) {
+            console.log(error);
+        });
+        
+        console.log("starting to fetch");
+        fetch(`/getProject?userID=${this.state.userID}`).then(function (response) {
+            if (response.status === 200) {
+                return response.json();
+            }
+        }).then( (res) => {
+            console.log("Success!");
+            console.log("fetched", res.rows);
+            this.setState( { userID: this.state.userID, projects: res.rows});
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     renderTableData() {
         let rows = [];
         this.state['projects'].map( (project) => {
@@ -70,7 +100,7 @@ class Project extends Component  {
                 <div>
                     <AddProject addProject={this.addProject} />
                     <br />
-                    <Projectitem rows={rows} />
+                    <Projectitem rows={rows} deleteProject={this.deleteProject} />
                 </div>                   
         );
     }

@@ -12,6 +12,7 @@ class GanttItem extends Component {
     }
 
     render() {
+        console.log("props showGantt", this.props.showGantt);
         const { userID } = this.state;
         const rows = this.props.rows;
         if (this.props.showGantt & rows.length > 0 ) {
