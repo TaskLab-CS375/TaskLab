@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import '../Form.css'
+import '../Form.css';
+import { withCookies } from 'react-cookie';
 
 export default class Register extends Component {
     constructor(props) {
@@ -32,10 +33,14 @@ export default class Register extends Component {
             }
         }).then(res => {
             if (res.status === 200) {
+                const { cookies } = this.props;
+                cookies.set('userID', this.state.email, { path: '/' });
+
                 this.props.history.push('/');
+                window.location.reload();
             } else {
                 res.text().then(message => {
-                    this.setState({ error: message })
+                    this.setState({ error: message });
                 });
             }
         }).catch(err => {
