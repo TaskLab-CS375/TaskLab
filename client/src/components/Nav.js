@@ -6,8 +6,8 @@ import Login from "./authentication/Login";
 import Register from "./authentication/Register";
 import { checkLogin } from "../utilities/auth";
 import Dashboard from "./Dashboard";
-import Project from "./Project";
-import Gantt from "./Gantt";
+import Project from "./projects/Project";
+import Gantt from "./projects/Gantt";
 
 export default class Nav extends Component {
     constructor(props) {
@@ -89,7 +89,7 @@ export default class Nav extends Component {
                             withAuth(<Project {...props} />)
                         )}/>
                      <Route
-                        path="/gantt"
+                        path="/gantt*"
                         component={withAuth(Gantt)}
                         render={(props) => (
                             withAuth(<Gantt {...props} />)

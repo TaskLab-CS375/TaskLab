@@ -27,8 +27,8 @@ CREATE TABLE Projects (
     projectName VARCHAR(50),
     groupID INTEGER REFERENCES Groups(groupID),
     projectStatus VARCHAR(50),
-    startTime timestamp,
-    endTime timestamp
+    startTime timestamptz,
+    endTime timestamptz
 );
 
 /* Link users to projects */
@@ -41,10 +41,9 @@ CREATE TABLE Tasks (
     taskID SERIAL PRIMARY KEY,
     projectID INTEGER REFERENCES Projects(projectID),
     taskName VARCHAR(50),
-    taskDescription VARCHAR(50),
-    taskStatus VARCHAR(50),
-    startTime timestamp,
-    endTime timestamp
+    percentComplete INTEGER,
+    startTime timestamptz,
+    endTime timestamptz
 );
 
 
