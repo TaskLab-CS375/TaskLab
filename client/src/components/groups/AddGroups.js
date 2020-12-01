@@ -28,6 +28,8 @@ class AddGroups extends Component {
                 response.text().then(data => {
                     this.setState({ error: data });
                 })
+            } else {
+                window.location.reload();
             }
         });
 
