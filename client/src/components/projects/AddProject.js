@@ -25,8 +25,6 @@ class AddProject extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        console.log("start Date", this.state.start);
-        console.log("end Date", this.state.end);
         this.props.addProject(this.state);
         this.setState({ userID: this.state.userID, name: '', group: '', start: new Date(), end: new Date(), status: ''});
     }

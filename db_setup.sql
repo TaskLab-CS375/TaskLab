@@ -1,5 +1,6 @@
 /* Note: this drops all existing tables in database 
 Need to \c to correct database and then run */
+
 drop schema public cascade;
 create schema public;
 
@@ -13,7 +14,7 @@ CREATE TABLE Users (
 
 CREATE TABLE Groups (
     groupID SERIAL PRIMARY KEY,
-    groupName VARCHAR(50)
+    groupName VARCHAR(50) 
 );
 
 /* Link users to groups */

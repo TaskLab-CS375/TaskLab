@@ -18,6 +18,11 @@ class Projectitem extends Component  {
         this.props.deleteProject(projectID);
     }
 
+    onEdit = (e) => {
+        let projectID = e.target.parentNode.parentNode.getAttribute("projectID");
+        console.log("starting to edit projectID", projectID);
+        this.props.getEditProjectInfo(projectID);
+    }
     render() {
         const rows = this.props.rows
         console.log(rows);
@@ -43,6 +48,7 @@ class Projectitem extends Component  {
                         <th align="right">{new Date(row.start).toLocaleDateString("en-US")}</th>
                         <th align="right">{new Date(row.end).toLocaleDateString("en-US")}</th>
                         <th align="right">{row.status}</th>
+                        <th align="right"><button onClick={this.onEdit}>Edit</button></th>
                         <th align="right"><button onClick={this.onDelete}>Delete</button></th>
                         </tr>
                     ))}

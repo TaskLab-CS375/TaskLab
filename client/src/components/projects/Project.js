@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {withCookies} from "react-cookie";
 import Projectitem from './Projectitem';
 import AddProject from './AddProject';
+import EditProject from './EditProject';
 
 class Project extends Component  {
     constructor(props) {
@@ -10,7 +11,11 @@ class Project extends Component  {
         const { cookies } = props;
         this.state = {
             userID: cookies.get('userID') || '',
-            projects: []
+            projects: [],
+            openEdit: false,
+            editSelected: {},
+            editSuccess: false,
+            deleteSuccess: false
         };
     }
 
@@ -23,7 +28,7 @@ class Project extends Component  {
         }).then( (res) => {
             console.log("Success!");
             console.log("fetched", res.rows);
-            this.setState( { userID: this.state.userID, projects: res.rows});
+            this.setState( { ...this.state, projects: res.rows, editSuccess: false, deleteSuccess: false});
         }).catch(function (error) {
             console.log(error);
         });
@@ -40,9 +45,63 @@ class Project extends Component  {
         }).then(response => response.json())
         .then((data) => {
             console.log(data.rows);
-            this.setState( { userID: this.state.userID, projects: data.rows } );
+            this.setState( { ...this.state, projects: data.rows, editSuccess: false, deleteSuccess: false } );
             console.log("Success!");
         })
+    }
+
+    getEditProjectInfo = (projectID) => {
+        if (projectID) {
+            console.log("initiating edit for", projectID);
+            fetch(`/getProjectInfo?projectID=${projectID}`).then(function (response) {
+                if (response.status === 200) {
+                    return response.json();
+                }
+            }).then( (res) => {
+                console.log("Success!");
+                console.log("fetched", res.rows);
+                this.setState({...this.state, openEdit: true, editSelected: res.rows, editSuccess: false, deleteSuccess: false});
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+    }
+
+    editProject = (info) => {
+        console.log("received on editProject", info);
+        if (info.projectID) {
+            fetch("/updateProjectInfo", {
+                method: 'PUT', 
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(info),
+            }).then((response) => {
+                if (response.status === 200) {
+                    console.log("success!");
+                }
+                return response.json()
+            })
+            .then((data) => {
+                console.log(data.rows);
+                this.setState({...this.state, openEdit: false, editSelected: {}, editSuccess: true, deleteSuccess: false});
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+            fetch(`/getProject?userID=${this.state.userID}`).then(function (response) {
+                if (response.status === 200) {
+                    return response.json();
+                }
+            }).then( (res) => {
+                console.log("Success!");
+                console.log("fetched", res.rows);
+                this.setState( { ...this.state, projects: res.rows});
+            }).catch(function (error) {
+                console.log(error);
+            });
+        };
     }
 
     deleteProject = (projectID) => {
@@ -55,8 +114,6 @@ class Project extends Component  {
             }
         }).then( (res) => {
             console.log("Success!");
-            // console.log("fetched", res.rows);
-            // this.setState( { userID: this.state.userID, projects: res.rows});
         }).catch(function (error) {
             console.log(error);
         });
@@ -69,13 +126,17 @@ class Project extends Component  {
         }).then( (res) => {
             console.log("Success!");
             console.log("fetched", res.rows);
-            this.setState( { userID: this.state.userID, projects: res.rows});
+            let deleteSuccess = true;
+            res.rows.map( (project) => {
+                deleteSuccess = project.projectid === projectID;
+            })
+            this.setState( { ...this.state, projects: res.rows, editSuccess: false, deleteSuccess: deleteSuccess});
         }).catch(function (error) {
             console.log(error);
         });
     }
 
-    renderTableData() {
+    renderTableData = () => {
         let rows = [];
         this.state['projects'].map( (project) => {
             let eachProject = {};
@@ -95,15 +156,33 @@ class Project extends Component  {
         const userID = this.state.userID;
         const rows = this.renderTableData();
         console.log("new state", this.state);
-        console.log(Array.isArray(this.state['projects']));
+
+        let editPopup = <div></div>;
+        if (this.state.openEdit) {
+            editPopup = <EditProject openEdit={this.state.openEdit} closeEdit={this.closeEdit} oldProject={this.state.editSelected} editProject={this.editProject} />
+        }
+
+        let editMessage = <div></div>;
+        if (this.state.editSuccess) {
+            editMessage = <p style={{color: "red"}}>Your changes have been saved.</p>
+        }
+
+        let deleteMessage = <div></div>;
+        if (this.state.deleteSuccess) {
+            deleteMessage = <p style={{color: "red"}}>The project has been successfully deleted.</p>
+        }
+
         return (
                 <div>
                     <AddProject addProject={this.addProject} />
                     <br />
-                    <Projectitem rows={rows} deleteProject={this.deleteProject} />
+                    {editPopup}
+                    {editMessage}
+                    {deleteMessage}
+                    <Projectitem rows={rows} deleteProject={this.deleteProject} getEditProjectInfo={this.getEditProjectInfo} />
                 </div>                   
         );
     }
 }
 
-export default withCookies(Project)
+export default withCookies(Project);
