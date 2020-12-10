@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import '../Form.css';
 import { withCookies } from 'react-cookie';
 
-export default class Register extends Component {
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -37,16 +37,14 @@ export default class Register extends Component {
                 cookies.set('userID', this.state.email, { path: '/' });
 
                 this.props.history.push('/');
-                window.location.reload();
+                this.props.login();
             } else {
                 res.text().then(message => {
                     this.setState({ error: message });
                 });
             }
         }).catch(err => {
-            err.text().then(errorMessage => {
-                this.setState({ error: errorMessage })
-            });
+            console.log(err);
         })
     }
 
@@ -98,3 +96,5 @@ export default class Register extends Component {
         );
     }
 }
+
+export default withCookies(Register);

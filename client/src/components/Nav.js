@@ -19,6 +19,10 @@ export default class Nav extends Component {
         checkLogin().then(result => this.setState({ isAuthenticated: result }));
     }
 
+    login = () => {
+        this.setState({ isAuthenticated: true });
+    }
+
     async logout(e) {
         e.preventDefault();
         await fetch('/logout');
@@ -97,9 +101,13 @@ export default class Nav extends Component {
                     <Route
                         path="/login"
                         render={(props) => (
-                            <Login {...props} />
+                            <Login login={this.login} {...props} />
                         )} />
-                    <Route path="/register" component={Register} />
+                    <Route
+                        path="/register"
+                        render={(props) => (
+                            <Register login={this.login} {...props} />
+                        )} />
                 </Switch>
             </div>
         );
