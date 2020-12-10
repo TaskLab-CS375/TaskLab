@@ -34,7 +34,7 @@ CTRL-C to get back to normal prompt
 $ psql -f db_setup.sql tasklab
 ```
 
-After all that, run
+After that, rename sample-env.json to env.json and change the values to your values. Finally, run
 ```shell script
 $ npm run dev
 ```
