@@ -1,0 +1,10 @@
+{
+  "secret": "",
+  "database": {
+    "user": "postgres",
+    "host": "localhost",
+    "database": "tasklab",
+    "password": "",
+    "port": 5432
+  }
+}
