@@ -29,7 +29,9 @@ class AddGroups extends Component {
                     this.setState({ error: data });
                 })
             } else {
+                this.props.updateDashboard(true);
                 window.location.reload();
+                return false;
             }
         });
 

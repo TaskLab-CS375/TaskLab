@@ -10,7 +10,8 @@ class GetGroups extends Component {
         this.state = {
             userID: cookies.get('userID') || '',
             groups: '',
-            error: ''
+            error: '',
+            shouldUpdate: false
         };
     }
 
@@ -29,6 +30,7 @@ class GetGroups extends Component {
             } else {
                 response.json().then(data => {
                     this.setState({ groups: data });
+                    console.log(data);
                 });
             }
         });

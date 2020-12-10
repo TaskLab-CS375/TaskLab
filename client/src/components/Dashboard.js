@@ -9,8 +9,13 @@ class Dashboard extends Component {
 
         const { cookies } = props;
         this.state = {
-            userID: cookies.get('userID') || ''
+            userID: cookies.get('userID') || '',
+            shouldUpdate: false
         };
+    }
+
+    updateDashboard = (shouldUpdate) => {
+        this.setState({shouldUpdate: shouldUpdate});
     }
 
     render() {
@@ -20,9 +25,9 @@ class Dashboard extends Component {
             <div>
                 <h1>Welcome { userID }!</h1>
                 <h3>Add Group Here</h3>
-                <AddGroups />
+                <AddGroups updateDashboard={this.updateDashboard} />
                 <h3>All Groups</h3>
-                <GetGroups />
+                <GetGroups {...this.state} updateDashboard={this.updateDashboard}/>
             </div>
         );
     }

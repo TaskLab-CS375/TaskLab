@@ -64,5 +64,5 @@ app.get('*', (req, res) => {
   
 
 app.listen(port, () => {
-    console.log(`Listening at: ${port}`);
+    console.log(`Listening at: http://127.0.0.1:${port}`);
 });
